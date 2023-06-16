@@ -3,6 +3,7 @@ package com.apni_dukan.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.apni_dukan.Exceptions.AdminExection;
 import com.apni_dukan.Repo.AdminRepo;
 import com.apni_dukan.models.Admin;
 
@@ -10,12 +11,15 @@ import com.apni_dukan.models.Admin;
 public class AdminServiceImpl implements AdminService{
 
 	@Autowired
-	private AdminRepo adminRepo;
+	private AdminRepo adminDb;
+	
 	@Override
 	public Admin registerAdmin(Admin admin) {
 		
-		Admin registeredAdmin = adminRepo.save(admin);
-//		return "Your account has been created";
+		if(adminDb.findByMobileNumber(admin.getMobileNumber()) != null) {
+			throw new AdminExection(admin.getName() + " your account is already created ");
+		}	
+		Admin registeredAdmin = adminDb.save(admin);
 		return registeredAdmin;
 	}
 	
