@@ -24,10 +24,10 @@ public class GlobalExecptionHandler {
 	}
 	
 	@ExceptionHandler(UserException.class)
-	public ResponseEntity<ExceptionDetails> userRegisterException(AdminExection ae, WebRequest wr){
+	public ResponseEntity<ExceptionDetails> userRegisterException(UserException ue, WebRequest wr){
 		
 		ExceptionDetails ex = new ExceptionDetails();
-		ex.setMessage(ae.getMessage());
+		ex.setMessage(ue.getMessage());
 		ex.setDiscription(wr.getDescription(false));
 		ex.setDate(LocalDate.now());
 		
