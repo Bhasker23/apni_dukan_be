@@ -23,6 +23,16 @@ public class GlobalExecptionHandler {
 		return new ResponseEntity<>(ex,HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(UserException.class)
+	public ResponseEntity<ExceptionDetails> userRegisterException(AdminExection ae, WebRequest wr){
+		
+		ExceptionDetails ex = new ExceptionDetails();
+		ex.setMessage(ae.getMessage());
+		ex.setDiscription(wr.getDescription(false));
+		ex.setDate(LocalDate.now());
+		
+		return new ResponseEntity<>(ex,HttpStatus.BAD_REQUEST);
+	}
 	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ExceptionDetails> globalException(AdminExection ae, WebRequest wr){

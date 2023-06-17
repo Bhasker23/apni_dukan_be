@@ -8,4 +8,5 @@ import com.apni_dukan.models.User;
 @Repository
 public interface UserRepo extends JpaRepository<User, Integer> {
 
+	User findByMobileNumber(String mobileNumber);
 }
