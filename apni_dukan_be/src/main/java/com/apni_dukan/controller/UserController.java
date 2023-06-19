@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.apni_dukan.models.User;
 import com.apni_dukan.services.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
+@Slf4j
 @RequestMapping("/user")
 public class UserController {
 	
@@ -21,6 +24,7 @@ public class UserController {
 	@PostMapping("register")
 	public ResponseEntity<User> userRegistration(@RequestBody User userDetails){
 		
+		log.info("UserRegistration method calls");
 		return new ResponseEntity<User>(userService.registerUser(userDetails),HttpStatus.CREATED);
 	}
 }
