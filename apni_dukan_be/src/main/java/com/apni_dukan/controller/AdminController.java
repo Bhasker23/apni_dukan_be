@@ -31,4 +31,7 @@ public class AdminController {
 		return new ResponseEntity<Admin>(adminService.registerAdmin(adminDetails), HttpStatus.CREATED);
 		
 	}
+	
+	
+	
 }
