@@ -34,6 +34,18 @@ public class GlobalExecptionHandler {
 		return new ResponseEntity<>(ex,HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(ProductException.class)
+	public ResponseEntity<ExceptionDetails> productDeletionException(ProductException pe, WebRequest wr){
+		
+		
+		ExceptionDetails ex = new ExceptionDetails();
+		ex.setMessage(pe.getMessage());
+		ex.setDiscription(wr.getDescription(false));
+		ex.setDate(LocalDate.now());
+		
+		return new ResponseEntity<ExceptionDetails>(ex, HttpStatus.NOT_FOUND);
+	}
+	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ExceptionDetails> globalException(AdminExection ae, WebRequest wr){
 		
