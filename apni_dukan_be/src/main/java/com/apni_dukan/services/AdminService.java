@@ -16,4 +16,7 @@ public interface AdminService {
 	public List<Product> getAllProducts();
 	
 	public Map<String, Product> deleteProduct(int id);
+	
+	public Map<String, Product> updateProduct(int id, Product updatedProduct);
+	
 }

@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +20,6 @@ import com.apni_dukan.models.Admin;
 import com.apni_dukan.models.Product;
 import com.apni_dukan.services.AdminService;
 
-import jakarta.persistence.Id;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -60,5 +59,14 @@ public class AdminController {
 		return new ResponseEntity<Map<String,Product>>(adminService.deleteProduct(id), HttpStatus.OK);
 			
 	}
+	
+	
+	@PutMapping("/updateProduct")
+	public ResponseEntity<Map<String, Product>> updatProductById(@RequestParam int id, @RequestBody Product updatedProduct){		
+		
+		return new ResponseEntity<Map<String,Product>>(adminService.updateProduct(id, updatedProduct), HttpStatus.OK);
+			
+	}
+	
 	
 }

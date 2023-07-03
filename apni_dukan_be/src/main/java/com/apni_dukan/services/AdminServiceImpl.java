@@ -3,7 +3,6 @@ package com.apni_dukan.services;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +39,11 @@ public class AdminServiceImpl implements AdminService{
 	public String uploadProduct(Product productbody) {
 		
 //		login and signup execption has to be checked or if this api's are authenticated and authorized
+		
+		if (productDb.findById(productbody.getId()).isPresent()) {
+			throw new ProductException("Product Id "+productbody.getId() + " is already present in database, change the product id");
+		}
+		
 		Product savedProduct = productDb.save(productbody);
 		
 		return savedProduct.getName()+ " has been uploaded";
@@ -49,6 +53,7 @@ public class AdminServiceImpl implements AdminService{
 	public List<Product> getAllProducts() {
 		
 //		login and signup execption has to be checked or if this api's are authenticated and authorized
+		
 		List<Product> list = productDb.findAll();
 		
 		if (list.size() == 0) {
@@ -61,6 +66,12 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public Map<String, Product> deleteProduct(int id) {
 		
+		List<Product> list = productDb.findAll();
+		
+		if (list.size() == 0) {
+			throw  new ProductException("OOPS! Your Product List is Empty.");
+		}
+		
 		if (productDb.findById(id) == null) {
 			throw new ProductException("Given Product id is not availble in database");
 		}
@@ -70,6 +81,30 @@ public class AdminServiceImpl implements AdminService{
 		productDb.delete(deletedProduct);
 		String name = deletedProduct.getName();
 		map.put(name+" has been deleted ", deletedProduct);
+		return map;
+	}
+
+	@Override
+	public Map<String, Product> updateProduct(int id, Product updatedProduct){
+		
+		List<Product> list = productDb.findAll();
+		
+		if (list.size() == 0) {
+			throw  new ProductException("OOPS! Your Product List is Empty.");
+		}
+		if (productDb.findById(id) == null) {
+			throw new ProductException("Given Product id is not availble in database");
+		}
+		
+		
+		Product oldProduct = productDb.findById(id).get();
+		oldProduct.setName(updatedProduct.getName());
+		oldProduct.setPrice(updatedProduct.getPrice());
+		oldProduct.setDescription(updatedProduct.getDescription());
+		productDb.save(oldProduct);
+		Map<String, Product> map = new HashMap<>();
+		map.put("Product updated with given Product ",oldProduct);
+		
 		return map;
 	}
 	
