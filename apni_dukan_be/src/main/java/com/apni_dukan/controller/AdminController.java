@@ -50,12 +50,14 @@ public class AdminController {
 	@GetMapping("/getAllProduct")
 	public ResponseEntity<List<Product>> getAllProduct(){
 		
+		log.info("getAllProduct method called");
 		return new ResponseEntity<List<Product>>(adminService.getAllProducts(), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/deleteById")
 	public ResponseEntity<Map<String, Product>> deleteProductById(@RequestParam int id){		
 		
+		log.info("deleteProductById method called");
 		return new ResponseEntity<Map<String,Product>>(adminService.deleteProduct(id), HttpStatus.OK);
 			
 	}
@@ -64,6 +66,7 @@ public class AdminController {
 	@PutMapping("/updateProduct")
 	public ResponseEntity<Map<String, Product>> updatProductById(@RequestParam int id, @RequestBody Product updatedProduct){		
 		
+		log.info("updatProductById method called");
 		return new ResponseEntity<Map<String,Product>>(adminService.updateProduct(id, updatedProduct), HttpStatus.OK);
 			
 	}
