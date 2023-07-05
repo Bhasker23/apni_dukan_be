@@ -23,5 +23,8 @@ public class Product {
 	private int price;
 	private String description;
 
-	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
+	@Transient
+	private Cart cartPage;
 }

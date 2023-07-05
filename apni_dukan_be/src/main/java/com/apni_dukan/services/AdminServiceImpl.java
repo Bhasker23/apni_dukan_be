@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import com.apni_dukan.Exceptions.AdminExection;
 import com.apni_dukan.Exceptions.ProductException;
 import com.apni_dukan.Repo.AdminRepo;
+import com.apni_dukan.Repo.CartRepo;
 import com.apni_dukan.Repo.ProductRepo;
 import com.apni_dukan.models.Admin;
+import com.apni_dukan.models.Cart;
 import com.apni_dukan.models.Product;
 
 
@@ -23,6 +25,9 @@ public class AdminServiceImpl implements AdminService{
 	
 	@Autowired
 	private ProductRepo productDb;
+	
+	@Autowired
+	private CartRepo cartDb;
 	
 	
 	@Override
@@ -104,6 +109,15 @@ public class AdminServiceImpl implements AdminService{
 		productDb.save(oldProduct);
 		Map<String, Product> map = new HashMap<>();
 		map.put("Product updated with given Product ",oldProduct);
+		
+		if (cartDb.findById(id).isPresent()) {
+			
+			Cart cartProduct = cartDb.getById(id);
+			cartProduct.setName(updatedProduct.getName());
+			cartProduct.setPrice(updatedProduct.getPrice());
+			cartProduct.setDescription(updatedProduct.getDescription());
+			cartDb.save(cartProduct);
+		}
 		
 		return map;
 	}

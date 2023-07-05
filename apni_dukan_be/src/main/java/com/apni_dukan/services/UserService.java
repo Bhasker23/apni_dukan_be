@@ -2,6 +2,7 @@ package com.apni_dukan.services;
 
 
 import java.util.List;
+import java.util.Map;
 
 import com.apni_dukan.models.Cart;
 import com.apni_dukan.models.Product;
@@ -16,7 +17,7 @@ public interface UserService {
 	
 	public Cart addToCart(Product product);
 	
-	public Product buyProduct(Product product);
+	public Map<String,Product> buyProduct(Product product);
 
 	
 

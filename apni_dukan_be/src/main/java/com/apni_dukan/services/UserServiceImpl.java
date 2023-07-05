@@ -1,6 +1,8 @@
 package com.apni_dukan.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,20 +53,28 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public  Cart addToCart(Product product) {
 		
+		if (productDb.findByName(product.getName()).isEmpty()) {
+			throw new ProductException(product.getName() + " is not avaible in databases.");
+		}
+		
 		Cart productAddedToCart = new Cart();
 		productAddedToCart.setId(product.getId());
 		productAddedToCart.setName(product.getName());
 		productAddedToCart.setPrice(product.getPrice());
 		productAddedToCart.setDescription(product.getDescription());
 		
+		productAddedToCart.getCarProduct().add(product);
 		return cartDb.save(productAddedToCart);
 	}
 	
 	
 	@Override
-	public Product buyProduct(Product product) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String,Product> buyProduct(Product product) {
+		
+		Map<String, Product> map = new HashMap<>();
+		
+		map.put("Congrats, you have purchased new Item.", product);
+		return map;
 	}
 
 }

@@ -1,10 +1,10 @@
 package com.apni_dukan.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.apni_dukan.models.Cart;
 import com.apni_dukan.models.Product;
 import com.apni_dukan.models.User;
-import com.apni_dukan.services.AdminService;
 import com.apni_dukan.services.UserService;
-import com.google.protobuf.Method;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,5 +48,13 @@ public class UserController {
 		log.info("addToCart method called");
 		
 		return new ResponseEntity<Cart>(userService.addToCart(product),HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/buyProduct")
+	public ResponseEntity<Map<String, Product>> butProduct(@RequestBody Product product){
+		
+		log.info("addToCart method called");
+		
+		return new ResponseEntity<Map<String, Product>>(userService.buyProduct(product),HttpStatus.CREATED);
 	}
 }
